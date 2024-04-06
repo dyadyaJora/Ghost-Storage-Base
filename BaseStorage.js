@@ -15,10 +15,10 @@ class StorageBase {
             year = date.format('YYYY');
 
         if (baseDir) {
-            return path.join(baseDir, year, month);
+            return this.joinPaths(baseDir, year, month);
         }
 
-        return path.join(year, month);
+        return this.joinPaths(year, month);
     }
 
     /**
@@ -48,7 +48,7 @@ class StorageBase {
                 i = i + 1;
                 return this.generateUnique(dir, name, ext, i);
             } else {
-                return path.join(dir, filename);
+                return this.joinPaths(dir, filename);
             }
         });
     }
@@ -72,6 +72,15 @@ class StorageBase {
             name = this.getSanitizedFileName(path.basename(file.name));
             return this.generateUnique(targetDir, name, null, 0);
         }
+    }
+
+    /**
+     *
+     * @param {String} paths
+     * @returns {String} joined path
+     */
+    joinPaths(...paths) {
+        return path.join(...paths)
     }
 
     getSanitizedFileName(fileName) {
